@@ -1,0 +1,52 @@
+﻿@page "/"
+@inject IJSRuntime JSRuntime  
+
+<h1>Cropping Image demo</h1>
+
+<form method="post" enctype="multipart/form-data" action="/Upload/Save">
+    <input type="file" id="FileUpload1" />
+    <br />
+    <br />
+    <table border="0" cellpadding="0" cellspacing="5">
+        <tr>
+            <td>
+                <img id="Image1" src="" alt="" style="display:none" />
+
+            </td>
+            <td>
+                <canvas id="canvas" height="5" width="5"></canvas>
+            </td>
+        </tr>
+    </table>
+    <br />
+    <input type="button" id="btnCrop" value="Crop" style="display: none" @onclick="Crop" />
+    @if (showUpload)
+    {
+        <input type="submit" id="btnUpload" value="Upload" />
+    }
+    <input type="hidden" name="imgX1" id="imgX1" />
+    <input type="hidden" name="imgY1" id="imgY1" />
+    <input type="hidden" name="imgWidth" id="imgWidth" />
+    <input type="hidden" name="imgHeight" id="imgHeight" />
+    <input type="hidden" name="imgCropped" id="imgCropped" />
+    <input type="hidden" name="fileName" id="fileName" />
+
+</form>
+
+@code
+{   
+    bool showCrop { get; set; }
+    bool showUpload { get; set; }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JSRuntime.InvokeAsync<Task>("JSCrop.Init");
+    }
+    async void Crop()
+    {
+        await JSRuntime.InvokeAsync<Task>("JSCrop.Crop");
+        showUpload = true;
+        StateHasChanged();
+
+    }
+
+}
