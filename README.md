@@ -8,4 +8,3 @@ Based on the work of Mudassar Khan https://www.aspsnippets.com/Articles/Crop-and
 
 You can see a [live demo here](https://blazordemos.exceldev.com/jscrop) !
 
-"This project is licensed under the terms of the MIT license."
